@@ -17,6 +17,8 @@ Level * initLevel(int roomCount){
     }
     Room * testRoom = initRoom(5, 10, 7, 7);
     newLevel->rooms[0] = testRoom;
+    Room * testRoom2 = initRoom(10, 40, 6, 6);
+    newLevel->rooms[1] = testRoom2;
 
     return newLevel;
 }
@@ -27,6 +29,7 @@ int updateLevel(Level * level){
         Room * currentRoom = level->rooms[i];
         updateRoom(currentRoom, level);
     }
+    buildCorridor(level->rooms[0], level->rooms[1], level);
 
     placePlayerInRoom(level->rooms[0], level->player);
     

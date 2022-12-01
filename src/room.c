@@ -66,3 +66,35 @@ int assignRoomWallTiles(Room * room, Level * level){
 
     return 0;
 }
+
+int buildCorridor(Room * room1, Room * room2, Level * level){
+    Position * start = getRoomCenter(room1);
+    Position * end = getRoomCenter(room2);
+    
+    Position * midpoint;
+    midpoint = malloc(sizeof(Position *));
+
+    int startDirection = rand() % 2;
+    if (startDirection == 1) {
+        midpoint->y = start->y;
+        midpoint->x = end->x;
+    } else if (startDirection == 2){
+        midpoint->y = end->y;
+        midpoint->x = start->x;
+    } else {
+        return 1;
+    }
+    level->tiles[midpoint->y][midpoint->x][0] = createTemplateTile(FLOOR_TILE);
+    int y, x;
+    printf("%d", midpoint->y);
+    getch();
+    for (y = 0; y < midpoint->y - start->y; y++){    
+        printf("Test\n");
+        getch();
+        for (x = 0; x < midpoint->x - start->x; x++){
+            level->tiles[y][x][0] = createTemplateTile(FLOOR_TILE);
+        }
+    }
+
+    return 0;
+}

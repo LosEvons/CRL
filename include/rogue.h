@@ -71,6 +71,7 @@ Position * getRoomCenter(Room * room);
 int updateRoom(Room * room, Level * level);
 int assignRoomWallTiles(Room * room, Level * level);
 int assignRoomFloorTiles(Room * room, Level * level);
+int buildCorridor(Room * room1, Room * room2, Level * level);
 
 /* Player Functions */
 Player * playerSetUp();

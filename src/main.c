@@ -6,12 +6,14 @@
 
 int main(){
     int ch;
+    srand(time(NULL)); // seeding for random numbers
     screenSetUp();
     Level * level;
-    level = initLevel(1);
+    level = initLevel(2);
     updateLevel(level);
     renderTiles(level);
     renderEntities(level);
+    buildCorridor(level->rooms[0], level->rooms[1], level);
 
     while((ch = getch()) != 'q'){
         // handling input
