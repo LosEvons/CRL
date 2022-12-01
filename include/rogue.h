@@ -18,6 +18,12 @@
 #define STONE_WALL_TILE 5
 #define DOOR_TILE 6
 
+/* Cardinal directions */
+#define NORTH 1
+#define WEST 2
+#define SOUTH 3
+#define EAST 4
+
 /*    STRUCTURE DECLARATIONS    */
 typedef struct Position{
     int y;
@@ -50,6 +56,11 @@ typedef struct Room{
     int width;
 } Room;
 
+typedef struct Relation{
+    int direction;
+    int distance;
+} Relation;
+
 /*    FUNCTION DECLARATIONS    */
 
 /* Screen Functions */
@@ -64,6 +75,7 @@ Tile * createUniqueTile(char sprite, int collision);
 /* Level Functions */
 Level * initLevel(int roomCount);
 int updateLevel(Level * level);
+Relation * twoPointRelation(Position * point1, Position * point2);
 
 /* Room Functions */
 Room * initRoom(int y, int x, int h, int w);
@@ -72,6 +84,7 @@ int updateRoom(Room * room, Level * level);
 int assignRoomWallTiles(Room * room, Level * level);
 int assignRoomFloorTiles(Room * room, Level * level);
 int buildCorridor(Room * room1, Room * room2, Level * level);
+int tunnelInDirection(Relation * relations, Position * start, Level * level);
 
 /* Player Functions */
 Player * playerSetUp();

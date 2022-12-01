@@ -1,8 +1,10 @@
 {
     "files.associations": {
-        "rogue.h":"c",
-        "stdlib.h":"c",
-        "curses.h":"c"
+        "rogue.h": "c",
+        "stdlib.h": "c",
+        "curses.h": "c",
+        "stdio.h": "c",
+        "time.h": "c"
     },
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "C_Cpp.vcpkg.enabled": false

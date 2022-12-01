@@ -13,7 +13,6 @@ int main(){
     updateLevel(level);
     renderTiles(level);
     renderEntities(level);
-    buildCorridor(level->rooms[0], level->rooms[1], level);
 
     while((ch = getch()) != 'q'){
         // handling input

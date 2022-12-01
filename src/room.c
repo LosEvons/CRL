@@ -75,25 +75,52 @@ int buildCorridor(Room * room1, Room * room2, Level * level){
     midpoint = malloc(sizeof(Position *));
 
     int startDirection = rand() % 2;
-    if (startDirection == 1) {
+    if (startDirection == 0) {
         midpoint->y = start->y;
         midpoint->x = end->x;
-    } else if (startDirection == 2){
+    } else if (startDirection == 1){
         midpoint->y = end->y;
         midpoint->x = start->x;
     } else {
         return 1;
     }
-    level->tiles[midpoint->y][midpoint->x][0] = createTemplateTile(FLOOR_TILE);
-    int y, x;
-    printf("%d", midpoint->y);
-    getch();
-    for (y = 0; y < midpoint->y - start->y; y++){    
-        printf("Test\n");
-        getch();
-        for (x = 0; x < midpoint->x - start->x; x++){
-            level->tiles[y][x][0] = createTemplateTile(FLOOR_TILE);
-        }
+    //level->tiles[midpoint->y][midpoint->x][0] = createTemplateTile(FLOOR_TILE);
+    
+    Relation * relations = twoPointRelation(midpoint, start);
+    tunnelInDirection(relations, start, level);
+    relations = twoPointRelation(end, midpoint);
+    tunnelInDirection(relations, midpoint, level);
+    free(relations);
+
+    return 0;
+}
+
+int tunnelInDirection(Relation * relations, Position * start, Level * level){
+    int i;
+    if (relations->direction == 0 || relations->distance == 0){
+        return 1;
+    }
+
+    switch(relations->direction){
+        case NORTH:
+            for (i = 0; i < relations->distance; i++)
+                level->tiles[start->y - i][start->x][0] = createTemplateTile(FLOOR_TILE);
+            break;
+
+        case WEST:
+            for (i = 0; i < relations->distance; i++)
+                level->tiles[start->y][start->x - i][0] = createTemplateTile(FLOOR_TILE);
+            break;
+
+        case SOUTH:
+            for (i = 0; i < relations->distance; i++)
+                level->tiles[start->y + i][start->x][0] = createTemplateTile(FLOOR_TILE);
+            break;
+
+        case EAST:
+            for (i = 0; i < relations->distance; i++)
+                level->tiles[start->y][start->x + i][0] = createTemplateTile(FLOOR_TILE);
+            break; 
     }
 
     return 0;
