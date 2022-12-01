@@ -26,7 +26,25 @@ Position * getRoomCenter(Room * room){
     return center_position;
 }
 
-int assignRoomTiles(Room * room, Level * level){
+int updateRoom(Room * room, Level * level){
+    assignRoomWallTiles(room, level);
+    assignRoomFloorTiles(room, level);
+
+    return 0;
+}
+
+int assignRoomFloorTiles(Room * room, Level * level){
+    int x, y;
+    for (y = 1; y < room->height; y++){
+        for (x = 1; x < room->width; x++){
+            level->tiles[room->position.y + y][room->position.x + x][0] = createTemplateTile(FLOOR_TILE);
+        }
+    }
+
+    return 0;
+}
+
+int assignRoomWallTiles(Room * room, Level * level){
     int x, y;
     // Corners
     level->tiles[room->position.y][room->position.x][0] = createTemplateTile(C_WALL_TILE);

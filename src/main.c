@@ -10,6 +10,8 @@ int main(){
     Level * level;
     level = initLevel(1);
     updateLevel(level);
+    renderTiles(level);
+    renderEntities(level);
 
     while((ch = getch()) != 'q'){
         // handling input

@@ -68,7 +68,9 @@ int updateLevel(Level * level);
 /* Room Functions */
 Room * initRoom(int y, int x, int h, int w);
 Position * getRoomCenter(Room * room);
-int assignRoomTiles(Room * room, Level * level);
+int updateRoom(Room * room, Level * level);
+int assignRoomWallTiles(Room * room, Level * level);
+int assignRoomFloorTiles(Room * room, Level * level);
 
 /* Player Functions */
 Player * playerSetUp();
