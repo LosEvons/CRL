@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "rogue.h":"c",
+        "stdlib.h":"c",
+        "curses.h":"c"
+    },
+    "C_Cpp.intelliSenseEngineFallback": "Enabled",
+    "C_Cpp.vcpkg.enabled": false
+}
