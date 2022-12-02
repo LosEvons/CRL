@@ -21,8 +21,6 @@ int renderTiles(Level * level){
 
 int renderEntities(Level * level){
     playerSpriteRefresh(level->player);
-    //mvprintw(level->player->position->y, level->player->position->x, level->player->sprite_string);
-    //move(level->player->position->y, level->player->position->x);
     
     return 0;
 }

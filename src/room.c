@@ -12,6 +12,18 @@ Room * initRoom(int y, int x, int h, int w){
     return newRoom;
 }
 
+Room * initDumRoom(){
+    Room * newRoom;
+    newRoom = malloc(sizeof(Room *));
+
+    newRoom->position.y = -1;
+    newRoom->position.x = -1;
+    newRoom->height = -1;
+    newRoom->width = -1;
+
+    return newRoom;
+}
+
 Position * getRoomCenter(Room * room){
     int y_center, x_center;
     Position * center_position;
@@ -125,3 +137,15 @@ int tunnelInDirection(Relation * relations, Position * start, Level * level){
 
     return 0;
 }
+
+int detectOverlap(Room * room1, Room * room2){
+    printf("test1\n");
+    getch();
+    if ((room1->position.y + room1->height >= room2->position.y) || (room1->position.y <= room2->position.y + room2->height)){
+        if ((room1->position.x + room1->width >= room2->position.x) || (room1->position.x <= room2->position.x + room2->width)){
+            return 1;
+        } 
+    }
+
+    return 0;
+}   

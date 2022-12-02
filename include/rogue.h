@@ -9,6 +9,12 @@
 #define MAP_HEIGHT 25
 #define MAP_WIDTH 100
 
+/* Room variables */
+#define MAX_ROOM_HEIGHT 10
+#define MIN_ROOM_HEIGHT 5
+#define MAX_ROOM_WIDTH 10
+#define MIN_ROOM_WIDTH 5
+
 /* Define different tiles */
 #define EMPTY_TILE 0
 #define V_WALL_TILE 1
@@ -76,15 +82,19 @@ Tile * createUniqueTile(char sprite, int collision);
 Level * initLevel(int roomCount);
 int updateLevel(Level * level);
 Relation * twoPointRelation(Position * point1, Position * point2);
+int checkRoomOverlap(Room * room, Level * level);
+Room ** initializeRooms(Level * level);
 
 /* Room Functions */
 Room * initRoom(int y, int x, int h, int w);
+Room * initDumRoom();
 Position * getRoomCenter(Room * room);
 int updateRoom(Room * room, Level * level);
 int assignRoomWallTiles(Room * room, Level * level);
 int assignRoomFloorTiles(Room * room, Level * level);
 int buildCorridor(Room * room1, Room * room2, Level * level);
 int tunnelInDirection(Relation * relations, Position * start, Level * level);
+int detectOverlap(Room * room1, Room * room2);
 
 /* Player Functions */
 Player * playerSetUp();
