@@ -9,7 +9,7 @@ int main(){
     srand(time(NULL)); // seeding for random numbers
     screenSetUp();
     Level * level;
-    level = initLevel(2);
+    level = initLevel(8);
     updateLevel(level);
     renderTiles(level);
     renderEntities(level);

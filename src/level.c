@@ -6,8 +6,8 @@ Level * initLevel(int roomCount){
     Level * newLevel;
     newLevel = malloc(sizeof(Level));
     newLevel->roomCount = roomCount;
-    newLevel->rooms = malloc(sizeof(Room *) * newLevel->roomCount);
     //newLevel->rooms = initializeRooms(newLevel);
+    newLevel->rooms = generateRooms(roomCount);
     newLevel->player = playerSetUp();
 
     int y, x;
@@ -16,14 +16,6 @@ Level * initLevel(int roomCount){
             newLevel->tiles[y][x][0] = createTemplateTile(STONE_WALL_TILE);
         }
     }
-    //Room * testRoom = initRoom(5, 10, 7, 7);
-    //newLevel->rooms[0] = testRoom;
-    //Room * testRoom2 = initRoom(10, 40, 6, 6);
-    //newLevel->rooms[1] = testRoom2;
-
-    generateRooms(newLevel->roomCount, newLevel);
-    printf("test\n");
-    getch();
 
     return newLevel;
 }
@@ -34,6 +26,7 @@ int updateLevel(Level * level){
         Room * currentRoom = level->rooms[i];
         updateRoom(currentRoom, level);
     }
+    corridorConnect(level);
     //buildCorridor(level->rooms[0], level->rooms[1], level);
 
     placePlayerInRoom(level->rooms[0], level->player);
@@ -77,17 +70,17 @@ Room ** initializeRooms(Level * level){
     int i;
     for (i = 0; i < level->roomCount; i++){
         Room * dumRoom = initDumRoom();
-        level->rooms[i] = dumRoom;
+        initRooms[i] = dumRoom;
     }
     return initRooms;
 }
 
-int checkRoomOverlap(Room * room, Level * level){
-    int result;
+int checkRoomOverlap(Room * room, Room ** roomList, int roomCount){
     int i;
-    for (i = 0; i < level->roomCount; i++){
-        if (detectOverlap(room, level->rooms[i]) == 1)
-            return 1;
+    for (i = 0; i < roomCount; i++){
+        if (detectOverlap(room, roomList[i]) == 2){
+            return 2;
+        }
     }
-    return 0;
+    return 1; // no overlap
 }

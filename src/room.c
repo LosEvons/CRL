@@ -138,14 +138,32 @@ int tunnelInDirection(Relation * relations, Position * start, Level * level){
     return 0;
 }
 
-int detectOverlap(Room * room1, Room * room2){
-    printf("test1\n");
-    getch();
-    if ((room1->position.y + room1->height >= room2->position.y) || (room1->position.y <= room2->position.y + room2->height)){
-        if ((room1->position.x + room1->width >= room2->position.x) || (room1->position.x <= room2->position.x + room2->width)){
-            return 1;
-        } 
-    }
+int roomInBounds(Room * room){
+    if (
+        (room->position.y <= 0)
+        || (room->position.x <= 0)
+        || (room->position.y + room->height >= MAP_HEIGHT)
+        || (room->position.x + room->width >= MAP_WIDTH)
+        )
+        return 2;
+    else
+        return 1; // is in bounds 
+}
 
-    return 0;
+int detectOverlap(Room * room1, Room * room2){
+    if (
+            (
+                (room1->position.y + room1->height >= room2->position.y)
+                && (room1->position.y <= room2->position.y + room2->height)
+            ) 
+            &&
+            (
+                (room1->position.x + room1->width >= room2->position.x)
+                && (room1->position.x <= room2->position.x + room2->width)
+            )
+        ){
+            return 2;
+        } else{
+            return 1;
+        }
 }   

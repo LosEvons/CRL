@@ -82,7 +82,7 @@ Tile * createUniqueTile(char sprite, int collision);
 Level * initLevel(int roomCount);
 int updateLevel(Level * level);
 Relation * twoPointRelation(Position * point1, Position * point2);
-int checkRoomOverlap(Room * room, Level * level);
+int checkRoomOverlap(Room * room, Room ** roomList, int roomCount);
 Room ** initializeRooms(Level * level);
 
 /* Room Functions */
@@ -95,6 +95,7 @@ int assignRoomFloorTiles(Room * room, Level * level);
 int buildCorridor(Room * room1, Room * room2, Level * level);
 int tunnelInDirection(Relation * relations, Position * start, Level * level);
 int detectOverlap(Room * room1, Room * room2);
+int roomInBounds(Room * room);
 
 /* Player Functions */
 Player * playerSetUp();
@@ -105,5 +106,8 @@ int handlePlayerAction(Position * newPosition, Player * player, Level * level);
 
 /* Input Handler Functions*/
 Position * handleMovementInput(int input, Player * player);
+
+/* Procgen Functions */
+Room ** generateRooms(int roomCount);
 
 #endif
