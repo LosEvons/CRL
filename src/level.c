@@ -13,7 +13,7 @@ Level * initLevel(int roomCount){
     int y, x;
     for (y = 0; y < MAP_HEIGHT; y++){
         for (x = 0; x < MAP_WIDTH; x++){
-            newLevel->tiles[y][x][0] = createTemplateTile(STONE_WALL_TILE);
+            newLevel->tiles[y][x][0] = createTemplateTile(EMPTY_TILE);
         }
     }
 
@@ -83,4 +83,24 @@ int checkRoomOverlap(Room * room, Room ** roomList, int roomCount){
         }
     }
     return 1; // no overlap
+}
+
+int positionInAnyRoom(Position * position, Level * level){
+    int i;
+    for (i = 0; i < level->roomCount; i++){
+        if (positionInRoom(position, level->rooms[i]) == 1){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int positionInAnyWall(Position * position, Level * level){
+    int i, inWall;
+    for (i = 0; i < level->roomCount; i++){
+        inWall = positionInWall(position, level->rooms[i]);
+        if (inWall > 0)
+            return inWall;
+    }
+    return 0;
 }

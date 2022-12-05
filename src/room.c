@@ -79,65 +79,6 @@ int assignRoomWallTiles(Room * room, Level * level){
     return 0;
 }
 
-int buildCorridor(Room * room1, Room * room2, Level * level){
-    Position * start = getRoomCenter(room1);
-    Position * end = getRoomCenter(room2);
-    
-    Position * midpoint;
-    midpoint = malloc(sizeof(Position *));
-
-    int startDirection = rand() % 2;
-    if (startDirection == 0) {
-        midpoint->y = start->y;
-        midpoint->x = end->x;
-    } else if (startDirection == 1){
-        midpoint->y = end->y;
-        midpoint->x = start->x;
-    } else {
-        return 1;
-    }
-    //level->tiles[midpoint->y][midpoint->x][0] = createTemplateTile(FLOOR_TILE);
-    
-    Relation * relations = twoPointRelation(midpoint, start);
-    tunnelInDirection(relations, start, level);
-    relations = twoPointRelation(end, midpoint);
-    tunnelInDirection(relations, midpoint, level);
-    free(relations);
-
-    return 0;
-}
-
-int tunnelInDirection(Relation * relations, Position * start, Level * level){
-    int i;
-    if (relations->direction == 0 || relations->distance == 0){
-        return 1;
-    }
-
-    switch(relations->direction){
-        case NORTH:
-            for (i = 0; i < relations->distance; i++)
-                level->tiles[start->y - i][start->x][0] = createTemplateTile(FLOOR_TILE);
-            break;
-
-        case WEST:
-            for (i = 0; i < relations->distance; i++)
-                level->tiles[start->y][start->x - i][0] = createTemplateTile(FLOOR_TILE);
-            break;
-
-        case SOUTH:
-            for (i = 0; i < relations->distance; i++)
-                level->tiles[start->y + i][start->x][0] = createTemplateTile(FLOOR_TILE);
-            break;
-
-        case EAST:
-            for (i = 0; i < relations->distance; i++)
-                level->tiles[start->y][start->x + i][0] = createTemplateTile(FLOOR_TILE);
-            break; 
-    }
-
-    return 0;
-}
-
 int roomInBounds(Room * room){
     if (
         (room->position.y <= 0)
@@ -148,6 +89,65 @@ int roomInBounds(Room * room){
         return 2;
     else
         return 1; // is in bounds 
+}
+
+int positionInRoom(Position * position, Room * room){
+    if (
+        (
+            (position->y >= room->position.y)
+            && (position->y <= room->position.y + room->height)
+        )
+        &&
+        (
+            (position->x >= room->position.x)
+            && (position->x <= room->position.x + room->width)
+        )
+    ){
+        return 1;
+    }
+    return 0;
+}
+// 1 for north, 2 for west, 3 for south, 4 for east
+int positionInWall(Position * position, Room * room){
+    if(
+        (position->y == room->position.y)
+        && (
+            (position->x >= room->position.x)
+            && (position->x <= room->position.x + room->width)
+        )
+    ){
+        return NORTH;
+    }
+    else if(
+        (position->y == room->position.y + room->height)
+        && (
+            (position->x >= room->position.x)
+            && (position->x <= room->position.x + room->width)
+        )
+    ){
+        return SOUTH;
+    }
+    else if(
+        (position->x == room->position.x)
+        && (
+            (position->y >= room->position.y)
+            && (position->y <= room->position.y + room->height)
+        )
+    ){
+        return WEST;
+    }
+    else if(
+        (position->x == room->position.x + room->width)
+        && (
+            (position->y >= room->position.y)
+            && (position->y <= room->position.y + room->height)
+        )
+    )  {
+        return EAST;
+    }
+    else {
+        return 0;
+    }
 }
 
 int detectOverlap(Room * room1, Room * room2){
@@ -166,4 +166,4 @@ int detectOverlap(Room * room1, Room * room2){
         } else{
             return 1;
         }
-}   
+}

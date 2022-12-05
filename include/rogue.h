@@ -67,6 +67,7 @@ typedef struct Relation{
     int distance;
 } Relation;
 
+
 /*    FUNCTION DECLARATIONS    */
 
 /* Screen Functions */
@@ -84,6 +85,8 @@ int updateLevel(Level * level);
 Relation * twoPointRelation(Position * point1, Position * point2);
 int checkRoomOverlap(Room * room, Room ** roomList, int roomCount);
 Room ** initializeRooms(Level * level);
+int positionInAnyRoom(Position * position, Level * level);
+int positionInAnyWall(Position * position, Level * level);
 
 /* Room Functions */
 Room * initRoom(int y, int x, int h, int w);
@@ -92,10 +95,15 @@ Position * getRoomCenter(Room * room);
 int updateRoom(Room * room, Level * level);
 int assignRoomWallTiles(Room * room, Level * level);
 int assignRoomFloorTiles(Room * room, Level * level);
-int buildCorridor(Room * room1, Room * room2, Level * level);
-int tunnelInDirection(Relation * relations, Position * start, Level * level);
 int detectOverlap(Room * room1, Room * room2);
 int roomInBounds(Room * room);
+int positionInRoom(Position * position, Room * room);
+int positionInWall(Position * position, Room * room);
+
+/* Corridor Functions */
+int buildCorridor(Room * room1, Room * room2, Level * level);
+int tunnelInDirection(Relation * relations, Position * start, Level * level);
+int tunnelThroughWall(Position * position, int wallOrientation, Level * level);
 
 /* Player Functions */
 Player * playerSetUp();
@@ -109,5 +117,6 @@ Position * handleMovementInput(int input, Player * player);
 
 /* Procgen Functions */
 Room ** generateRooms(int roomCount);
+int corridorConnect(Level * level);
 
 #endif
