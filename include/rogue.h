@@ -5,6 +5,10 @@
 #include "curses.h"
 #include "time.h"
 
+/* Game State Variables */
+#define MAIN_MENU 1
+#define PLAYER_TURN 2
+
 /* World variables */
 #define MAP_HEIGHT 25
 #define MAP_WIDTH 100
@@ -56,6 +60,11 @@ typedef struct Level{
     Player * player;
 } Level;
 
+typedef struct Cave{
+    struct Tile * tiles[MAP_HEIGHT][MAP_WIDTH][1];
+    Player * player;
+} Cave;
+
 typedef struct Room{
     struct Position position;
     int height;
@@ -70,10 +79,15 @@ typedef struct Relation{
 
 /*    FUNCTION DECLARATIONS    */
 
+/* Game State Functions */
+int handlePlayerTurn(int ch, Level * level);
+int handleMainMenu(int ch, int gameState);
+
 /* Screen Functions */
 int screenSetUp();
 int renderTiles(Level * level);
 int renderEntities(Level * level);
+int renderMainMenu();
 
 /* Tile Functions*/
 Tile * createTemplateTile(int type);
@@ -114,6 +128,7 @@ int handlePlayerAction(Position * newPosition, Player * player, Level * level);
 
 /* Input Handler Functions*/
 Position * handleMovementInput(int input, Player * player);
+int handleMainMenuInput(int ch);
 
 /* Procgen Functions */
 Room ** generateRooms(int roomCount);

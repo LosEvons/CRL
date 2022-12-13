@@ -6,7 +6,6 @@ Level * initLevel(int roomCount){
     Level * newLevel;
     newLevel = malloc(sizeof(Level));
     newLevel->roomCount = roomCount;
-    //newLevel->rooms = initializeRooms(newLevel);
     newLevel->rooms = generateRooms(roomCount);
     newLevel->player = playerSetUp();
 
@@ -27,7 +26,6 @@ int updateLevel(Level * level){
         updateRoom(currentRoom, level);
     }
     corridorConnect(level);
-    //buildCorridor(level->rooms[0], level->rooms[1], level);
 
     placePlayerInRoom(level->rooms[0], level->player);
     

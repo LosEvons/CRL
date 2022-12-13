@@ -24,3 +24,9 @@ int renderEntities(Level * level){
     
     return 0;
 }
+
+int renderMainMenu(){
+    mvprintw(MAP_HEIGHT / 2, MAP_WIDTH / 2, "(1) Generate Dungeon Map");
+    mvprintw((MAP_HEIGHT / 2) + 1, MAP_WIDTH / 2, "(q) Quit");
+    return 0;
+}

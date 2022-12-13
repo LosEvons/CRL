@@ -30,3 +30,20 @@ Position * handleMovementInput(int input, Player * player){
 
     return newPosition;
 }
+
+int handleMainMenuInput(int input){
+    switch(input){
+        case SELECT_DUNGEON_KEY:
+            return PLAYER_TURN;
+            break;
+
+        case QUIT_KEY:
+            return QUIT_KEY;
+            break;
+
+        default:
+            return 0;
+            break;
+    }
+    return 0;
+}
